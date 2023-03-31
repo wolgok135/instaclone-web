@@ -9,11 +9,6 @@ function PageTitle({ title }) {
   );
 }
 
-/*
-function PageTitle({ title }) {
-  return <Helmet>{title} | Instaclone</Helmet>;
-}
-*/
 PageTitle.propTypes = {
   title: PropTypes.string.isRequired,
 };
