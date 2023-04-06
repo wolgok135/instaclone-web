@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import FormError from "../components/auth/FormError";
 import { gql, useMutation } from "@apollo/client";
 import { logUserIn } from "../apollo";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const FacebookLogin = styled.div`
   color: #40588a;
@@ -26,6 +27,10 @@ const FacebookLogin = styled.div`
     margin-left: 10px;
     font-weight: 600;
   }
+`;
+
+const Location = styled.div`
+  color: #2ecc71;
 `;
 
 const LOGIN_MUTATION = gql`
@@ -39,6 +44,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
+  const location = useLocation();
+
   //const { register, watch } = useForm();
   //console.log("watch", watch());
   const {
@@ -51,6 +58,10 @@ function Login() {
   } = useForm({
     //mode: "onBlur",
     mode: "onChange",
+    defaultValues: {
+      userName: location?.state?.userName,
+      password: location?.state?.password,
+    },
   });
 
   const onCompleted = (data) => {
@@ -72,10 +83,10 @@ function Login() {
     if (loading) {
       return;
     }
-    const { username, password } = getValues();
+    const { userName, password } = getValues();
 
     login({
-      variables: { userName: username, password: password },
+      variables: { userName: userName, password: password },
     });
   };
 
@@ -95,9 +106,11 @@ function Login() {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
+        <Location>{location?.state?.message}</Location>
+
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
-            {...register("username", {
+            {...register("userName", {
               required: "username is required",
               minLength: {
                 value: 5,
@@ -108,9 +121,9 @@ function Login() {
             onFocus={clearLoginError}
             type="text"
             placeholder="Username"
-            hasError={Boolean(errors?.username?.message)}
+            hasError={Boolean(errors?.userName?.message)}
           />
-          <FormError message={errors?.username?.message} />
+          <FormError message={errors?.userName?.message} />
           <Input
             {...register("password", { required: "password is required" })}
             onFocus={clearLoginError}

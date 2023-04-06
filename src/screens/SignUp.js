@@ -67,12 +67,12 @@ function SignUp() {
     mode: "onChange",
   });
 
+  const { userName, password } = getValues();
+
   const onCompleted = (data) => {
     const {
       createAccount: { ok, error },
     } = data;
-
-    console.log(data);
 
     if (!ok) {
       return setError("result", { message: error });
@@ -80,10 +80,13 @@ function SignUp() {
     if (error) {
       return console.log("error", error);
     }
-    history.push(routes.home);
+    history.push(routes.home, {
+      message: "sign up completed, log in again",
+      userName: userName,
+      password: password,
+    });
   };
   const onSubmitValid = (data) => {
-    console.log("valid", data);
     if (loading) {
       return;
     }
