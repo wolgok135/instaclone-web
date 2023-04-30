@@ -13,6 +13,7 @@ import Layout from "./components/Layout";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   const darkMode = useReactiveVar(darkModeVar);
 
   return (
