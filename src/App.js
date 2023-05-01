@@ -37,6 +37,7 @@ function App() {
                   <SignUp />
                 </Route>
               ) : null}
+
               <Route path={`/users/:userName`}>
                 <Profile />
               </Route>
