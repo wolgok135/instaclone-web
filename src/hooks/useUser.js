@@ -5,6 +5,7 @@ import { useEffect } from "react";
 const ME_QUERY = gql`
   query me {
     me {
+      id
       userName
       avatar
     }
